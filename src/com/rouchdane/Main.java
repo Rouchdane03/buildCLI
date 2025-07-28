@@ -10,11 +10,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        lauchBookingCarApp();
+        launchBookingCarApp();
 
     }
 
-    private static void lauchBookingCarApp() {
+    private static void launchBookingCarApp() {
         int input =0;
         do {
             try {

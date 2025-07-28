@@ -37,14 +37,22 @@ public class CarBooking {
         isCanceled = canceled;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "CarBooking{" +
                 "bookingRef=" + bookingRef +
-                ",user=" + user +
-                ",carBuild=" + carBuild +
-                ",bookingTime=" + bookingTime +
-                ",isCanceled=" + isCanceled +
+                " ,user=" + user +
+                " ,carBuild=" + carBuild +
+                " ,bookingTime=" + bookingTime +
+                " ,isCanceled=" + isCanceled +
                 '}';
     }
 }

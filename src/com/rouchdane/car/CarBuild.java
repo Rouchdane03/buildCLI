@@ -57,9 +57,9 @@ public class CarBuild {
     public String toString() {
         return "CarBuild{" +
                 "regNumber=" + regNumber +
-                ",rentalPricePerDay=" + rentalPricePerDay +
-                ",brand='" + brand + '\'' +
-                ",isElectric=" + isElectric +
+                " ,rentalPricePerDay=" + rentalPricePerDay +
+                " ,brand='" + brand + '\'' +
+                " ,isElectric=" + isElectric +
                 '}';
     }
 }

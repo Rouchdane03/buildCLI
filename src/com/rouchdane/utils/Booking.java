@@ -1,15 +1,14 @@
 package com.rouchdane.utils;
 
+import com.rouchdane.car.CarBookingService;
 import com.rouchdane.car.CarBuildService;
 import com.rouchdane.person.UserService;
 
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class Booking {
 
-    public static String data = "";
     public static void displayBookingOptions(){
 
         String[] options = {
@@ -66,20 +65,21 @@ public class Booking {
                     System.out.print("➡️ select user id : ");
                     String s = scanner.nextLine();
 
-                    String result = carBuildService.bookACar(value,UUID.fromString(s)).toString();
-                    data +=result + " ";
+                    carBuildService.bookACar(value,UUID.fromString(s));
                 }
                     break;
 
                 case 2 :{
                     UserService userService = new UserService();
                     userService.viewAllUsers();
-                    userService.viewAllUserBookedCars();
+                    CarBookingService carBookingService  = new CarBookingService();
+                    carBookingService.viewAllUsersBookings();
                 }
                 break;
 
                 case 3 :{
-                    System.out.println("booking = "+Arrays.toString(getAllBookings()));
+                    CarBookingService carBookingService  = new CarBookingService();
+                    carBookingService.viewAllBookings();
                 }
                 break;
 
@@ -110,18 +110,4 @@ public class Booking {
             }
         }
     }
-
-    public static String[] getAllBookings(){
-        String[] result = data.split(" ");
-        return result;
-    }
-    
-//    public static void displayAllUsersBookings(UUID uuid){
-//        String[] looping = getAllBookings();
-//        for(ArrayValuesType nameVariable : arraysName){
-//
-//        }
-//    }
-    
-    
 }

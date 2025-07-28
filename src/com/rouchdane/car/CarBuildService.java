@@ -10,6 +10,8 @@ public class CarBuildService {
 
     private CarBuildDao carBuildDao;
 
+    private final CarBookingService carBookingService = new CarBookingService();
+
     public CarBuildService() {
         this.carBuildDao = new CarBuildDao();
 
@@ -33,7 +35,7 @@ public class CarBuildService {
         }
     }
 
-    public CarBooking bookACar(int regNumber, UUID userId) {
+    public void bookACar(int regNumber, UUID userId) {
 
         System.out.println("🚀Booking the car with this regNumber :  "+regNumber+" to the user with this id : "+userId+" ......");
         //1
@@ -49,9 +51,9 @@ public class CarBuildService {
         //3
         UUID bookingRef = UUID.randomUUID();
         CarBooking carBooked  = new CarBooking(bookingRef,us,carBuild, LocalDateTime.now());
-        System.out.println("Booking ref : "+bookingRef);
+        carBookingService.addBooking(carBooked);
 
-        return carBooked;
+        System.out.println("Booking ref : "+bookingRef);
 
     }
 
