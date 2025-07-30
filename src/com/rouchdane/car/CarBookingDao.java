@@ -1,6 +1,6 @@
 package com.rouchdane.car;
 
-public class CarBookingDao {
+public class CarBookingDao implements CarBookingInterface{
 
     private static CarBooking[] data ;
     private static int initValue, countBooked;
@@ -12,6 +12,7 @@ public class CarBookingDao {
         countBooked = 0;
     }
 
+    @Override
     public void insertBooking(CarBooking carBooking) {
             if (initValue == data.length) {
                 extendAndReassignData();
@@ -28,6 +29,7 @@ public class CarBookingDao {
         data = dataBackup;
     }
 
+    @Override
     public CarBooking[] getAllBookings(){
         return data;
     }

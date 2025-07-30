@@ -1,16 +1,27 @@
 package com.rouchdane.utils;
 
+import com.rouchdane.car.CarBookingDao;
 import com.rouchdane.car.CarBookingService;
+import com.rouchdane.car.CarBuildDao;
 import com.rouchdane.car.CarBuildService;
+import com.rouchdane.person.UserArrayDataService;
+import com.rouchdane.person.UserDao;
 import com.rouchdane.person.UserService;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class Booking {
 
-    public static void displayBookingOptions(){
+    private static final UserDao userDao = new UserArrayDataService();
+    private static final UserService userService = new UserService(userDao);
+    private static final CarBookingDao carBookingDao = new CarBookingDao();
+    private static final CarBookingService carBookingService  = new CarBookingService(carBookingDao,userService);
+    private static final CarBuildDao carBuildDao = new CarBuildDao();
+    private static final CarBuildService carBuildService = new CarBuildService(carBuildDao,carBookingService,userService);
 
+    public static void displayBookingOptions(){
         String[] options = {
                 "1\uFE0F⃣ - Book Car",
                 "2\uFE0F⃣ - View All User Booked Cars",
@@ -20,94 +31,85 @@ public class Booking {
                 "6\uFE0F⃣ - View all users",
                 "7\uFE0F⃣ - Exit"
         };
-
         for (int i = 0; i <7 ; i++) {
             System.out.println(options[i]);
         }
-
     }
-
-    public static void displaySelectedOption(int val){
-        String text = switch (val){
-            case 1 -> "Alright! You want to book a car";
-            case 2 -> "Alright! You want to view All User Booked Cars";
-            case 3 -> "Alright! You want to View All Bookings";
-            case 4 -> "Alright! You want to View Available Cars";
-            case 5 -> "Alright! You want to View Available Electric Cars";
-            case 6 -> "Alright! You want to View View all users";
-            case 7 -> "See you next time, bye 👋🏾";
-            default -> "Unavailable option selected";
-
-        };
-        System.out.println(text);
-    }
-
 
     public static void doThisAction(int input) {
-
-        if (input>0 && input<=7){
-
             switch (input){
+
                 case 1 :{
-                    CarBuildService carBuildService = new CarBuildService();
+                    System.out.println("Alright! You want to book a car");
                     carBuildService.viewAvailableCars();
 
-
                     Scanner scanner = new Scanner(System.in);
-
                     System.out.print("➡️ select a regNumber : ");
                     int value = scanner.nextInt();
                     scanner.nextLine(); // consume the \n
 
-                    UserService userService = new UserService();
-                    userService.viewAllUsers();
+                    try {
+                        userService.viewAllUsers();
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
 
                     System.out.print("➡️ select user id : ");
                     String s = scanner.nextLine();
 
-                    carBuildService.bookACar(value,UUID.fromString(s));
+                    try {
+                        carBuildService.bookACar(value,UUID.fromString(s));
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                     break;
 
                 case 2 :{
-                    UserService userService = new UserService();
-                    userService.viewAllUsers();
-                    CarBookingService carBookingService  = new CarBookingService();
-                    carBookingService.viewAllUsersBookings();
+                    System.out.println("Alright! You want to view All User Booked Cars");
+                    try {
+                        userService.viewAllUsers();
+                        carBookingService.viewAllUsersBookings();
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());;
+                    }
                 }
                 break;
 
                 case 3 :{
-                    CarBookingService carBookingService  = new CarBookingService();
+                    System.out.println("Alright! You want to View All Bookings");
                     carBookingService.viewAllBookings();
                 }
                 break;
 
                 case 4 :{
-                    CarBuildService carBuildService = new CarBuildService();
+                    System.out.println("Alright! You want to View Available Cars");
                     carBuildService.viewAvailableCars();
-
                 }
                 break;
 
                 case 5 :{
-                    CarBuildService carBuildService = new CarBuildService();
+                    System.out.println("Alright! You want to View Available Electric Cars");
                     carBuildService.viewAvailableElectricCars();
                 }
                 break;
 
                 case 6 :{
-
-                    UserService userService = new UserService();
-                    userService.viewAllUsers();
-
+                    System.out.println("Alright! You want to View View all users");
+                    try {
+                        userService.viewAllUsers();
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 break;
+
                 case 7:
+                    System.out.println("See you next time, bye 👋🏾");
                 break;
+
                 default:
                     System.out.println("Unavailable option selected");
             }
-        }
     }
 }

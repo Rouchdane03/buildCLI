@@ -3,18 +3,20 @@ package com.rouchdane.car;
 import com.rouchdane.person.User;
 import com.rouchdane.person.UserService;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class CarBuildService {
 
     private CarBuildDao carBuildDao;
+    private CarBookingService carBookingService;
+    private UserService userService;
 
-    private final CarBookingService carBookingService = new CarBookingService();
-
-    public CarBuildService() {
-        this.carBuildDao = new CarBuildDao();
-
+    public CarBuildService(CarBuildDao carBuildDao, CarBookingService carBookingService, UserService service) {
+        this.carBuildDao = carBuildDao;
+        this.carBookingService = carBookingService;
+        this.userService = service;
     }
 
     public void viewAvailableElectricCars(){
@@ -35,7 +37,7 @@ public class CarBuildService {
         }
     }
 
-    public void bookACar(int regNumber, UUID userId) {
+    public void bookACar(int regNumber, UUID userId) throws IOException {
 
         System.out.println("🚀Booking the car with this regNumber :  "+regNumber+" to the user with this id : "+userId+" ......");
         //1
@@ -43,7 +45,6 @@ public class CarBuildService {
         CarBuild carBuild = findCarByRegNumber(regNumber);
 
         //2
-        UserService userService = new UserService();
         userService.flipUserBookingStatus(userId);
         User us = userService.findUserById(userId);
         System.out.println("🎉Successfully booked car with reg number "+regNumber+" for user "+us);

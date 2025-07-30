@@ -2,13 +2,19 @@ package com.rouchdane.car;
 
 import com.rouchdane.person.UserService;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class CarBookingService {
 
-    private final CarBookingDao carBookingDao = new CarBookingDao();
-    private final UserService userService = new UserService();
+    private CarBookingDao carBookingDao;
+    private UserService userService ;
+
+    public CarBookingService(CarBookingDao carBookingDao, UserService userService){
+        this.carBookingDao = carBookingDao;
+        this.userService = userService;
+    }
 
     public void addBooking(CarBooking carBooking){
          carBookingDao.insertBooking(carBooking);
@@ -25,7 +31,7 @@ public class CarBookingService {
         }
     }
 
-    public void viewAllUsersBookings(){
+    public void viewAllUsersBookings() throws IOException {
 
         int verify = 1;
         Scanner scanner = new Scanner(System.in);

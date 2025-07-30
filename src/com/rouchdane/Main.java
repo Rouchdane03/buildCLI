@@ -3,15 +3,14 @@ package com.rouchdane;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static com.rouchdane.utils.Booking.*;
+import static com.rouchdane.utils.Booking.displayBookingOptions;
+import static com.rouchdane.utils.Booking.doThisAction;
 
 
 public class Main {
 
     public static void main(String[] args) {
-
         launchBookingCarApp();
-
     }
 
     private static void launchBookingCarApp() {
@@ -21,7 +20,6 @@ public class Main {
                 displayBookingOptions();
                 Scanner scanner = new Scanner(System.in);
                 input= scanner.nextInt();
-                displaySelectedOption(input);
                 doThisAction(input);
                 System.out.println();
             } catch (InputMismatchException e) {
